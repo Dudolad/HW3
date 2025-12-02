@@ -5,25 +5,21 @@
         static void Main(string[] args)
         {
             //19.Знайдіть кількість входжень 'aba' в рядок.
-            string text = "ababaaba";
-            string find = "aba";
+            string s = "ababaabaababa";
+
+            char[] arr = s.ToCharArray();
 
             int count = 0;
 
-            for (int i = 0; i <= text.Length - find.Length;)
+            for (int i = 0; i < arr.Length - 2; i++)
             {
-                if (text.Substring(i, find.Length) == find)
+                if (arr[i] == 'a' && arr[i + 1] == 'b' && arr[i + 2] == 'a')
                 {
                     count++;
-                    i += find.Length; 
-                }
-                else
-                {
-                    i++; 
                 }
             }
 
-            Console.WriteLine($"Кількість входжень 'aba': {count}");
+            Console.WriteLine("Кількість входжень 'aba': " + count);
             Console.ReadKey();
         }
     }

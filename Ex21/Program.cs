@@ -6,34 +6,48 @@
         {
             //21.Дано рядок, що складається зі слів, розділених символами,
             //которі перераховані в дргому рядку. Показати всі слова.
-            string text = "привіт,як-справи?";
-
-            string separators = ",-?";
+            string text = "hello,world;this.is:test";
+            string separators = ",;.:";
+            char[] sepArr = separators.ToCharArray();
+            char[] arr = text.ToCharArray();
 
             List<string> words = new List<string>();
-            string current = "";
+            List<char> currentWord = new List<char>();
 
-            foreach (char c in text)
+            foreach (char c in arr)
             {
-                if (separators.Contains(c))
+                bool isSeparator = false;
+
+                foreach (char s in sepArr)
                 {
-                    if (current.Length > 0)
+                    if (c == s)
                     {
-                        words.Add(current);
-                        current = "";
+                        isSeparator = true;
+                        break;
+                    }
+                }
+
+                if (isSeparator)
+                {
+                    if (currentWord.Count > 0)
+                    {
+                        words.Add(new string(currentWord.ToArray()));
+                        currentWord.Clear();
                     }
                 }
                 else
                 {
-                    current += c;
+                    currentWord.Add(c);
                 }
             }
 
-            if (current.Length > 0)
-                words.Add(current);
+            if (currentWord.Count > 0)
+                words.Add(new string(currentWord.ToArray()));
 
             foreach (string w in words)
+            {
                 Console.WriteLine(w);
+            }
             Console.ReadKey();
         }
     }

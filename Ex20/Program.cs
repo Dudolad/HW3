@@ -7,31 +7,33 @@
             //20.Видалити в рядку всі зайві пробіли,
             //тобто серії підряд проставлених пробілів замінити на поодинокі пробіли.
             //Крайні пробіли в рядку видалити.
-            string text = "  Привіт   це   тест   ";
+            string s = "  Привіт   це   тест   ";
+            char[] arr = s.ToCharArray();
 
-            text = text.Trim();
+            List<char> result = new List<char>();
 
-            string result = "";
-            bool lastWasSpace = false;
+            bool wasSpace = true; 
 
-            foreach (char c in text)
+            foreach (char c in arr)
             {
                 if (c == ' ')
                 {
-                    if (!lastWasSpace)
-                    {
-                        result += c;
-                        lastWasSpace = true;
-                    }
+                    if (!wasSpace) 
+                        result.Add(' ');
+
+                    wasSpace = true;
                 }
                 else
                 {
-                    result += c;
-                    lastWasSpace = false;
+                    result.Add(c);
+                    wasSpace = false;
                 }
             }
 
-            Console.WriteLine(result);
+            if (result.Count > 0 && result[^1] == ' ')
+                result.RemoveAt(result.Count - 1);
+
+            Console.WriteLine(new string(result.ToArray()));
             Console.ReadKey();
         }
     }

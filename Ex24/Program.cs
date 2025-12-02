@@ -5,33 +5,55 @@
         static void Main(string[] args)
         {
             //24.Даний текст.Знайти слова, складені з цифр, і суму чисел, котрі утворюють ці слова.
-            string text = "abc 123 def 55 x 9z 100";
+            string s = "abc 123 def 55 x 9z 100";
+            char[] arr = s.ToCharArray();
 
-            string[] parts = text.Split(' ');
+            List<char> current = new List<char>();
+            List<int> numbers = new List<int>();
 
-            int total = 0;
-
-            foreach (string p in parts)
+            foreach (char c in arr)
             {
-                bool allDigits = true;
-
-                foreach (char c in p)
+                if (c != ' ')
                 {
-                    if (!char.IsDigit(c))
-                    {
-                        allDigits = false;
-                        break;
-                    }
+                    current.Add(c);
                 }
-
-                if (allDigits && p.Length > 0)
+                else
                 {
-                    Console.WriteLine($"Число знайдено: {p}");
-                    total += int.Parse(p);
+                    if (current.Count > 0)
+                    {
+                        bool isNumber = true;
+                        foreach (char ch in current)
+                            if (!char.IsDigit(ch))
+                                isNumber = false;
+
+                        if (isNumber)
+                            numbers.Add(int.Parse(new string(current.ToArray())));
+
+                        current.Clear();
+                    }
                 }
             }
 
-            Console.WriteLine($"Сума чисел =  {total}");
+            if (current.Count > 0)
+            {
+                bool isNumber = true;
+                foreach (char ch in current)
+                    if (!char.IsDigit(ch))
+                        isNumber = false;
+
+                if (isNumber)
+                    numbers.Add(int.Parse(new string(current.ToArray())));
+            }
+
+            int total = 0;
+            foreach (int n in numbers)
+                total += n;
+
+            Console.WriteLine("Числа в тексті:");
+            foreach (int n in numbers)
+                Console.WriteLine(n);
+
+            Console.WriteLine("Сума чисел: " + total);
             Console.ReadKey();
         }
     }
